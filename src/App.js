@@ -1,24 +1,64 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import { ThemeProvider } from 'theme-ui';
+import theme from './theme';
+import { Box, Card, Image, Heading, Text, Button, Flex, Link } from 'rebass';
+import { Label, Input } from '@rebass/forms';
+import Links from './components/Links';
 
 function App() {
+  // pathname
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Flex px={2} color="white" bg="black" alignItems="center">
+          <Text p={2} fontWeight="bold">
+            Go Pad
+          </Text>
+          <Box mx="auto" />
+          <Link
+            variant="nav"
+            href="#!"
+            sx={{
+              display: 'inline-block',
+              fontWeight: 'bold',
+              px: 2,
+              py: 1,
+              color: 'inherit'
+            }}
+          >
+            Links
+          </Link>
+          <Link
+            variant="nav"
+            href="#!"
+            sx={{
+              display: 'inline-block',
+              fontWeight: 'bold',
+              px: 2,
+              py: 1,
+              color: 'inherit'
+            }}
+          >
+            Pad
+          </Link>
+          <Link
+            variant="nav"
+            href="#!"
+            sx={{
+              display: 'inline-block',
+              fontWeight: 'bold',
+              px: 2,
+              py: 1,
+              color: 'inherit'
+            }}
+          >
+            Settings
+          </Link>
+        </Flex>
+        <Links />
+      </div>
+    </ThemeProvider>
   );
 }
 
