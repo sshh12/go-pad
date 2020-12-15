@@ -126,7 +126,7 @@ function Note({ note, moveToEdit }) {
               pb={0}
               pr={1}
             >
-              venmo-research
+              {t}
             </Button>
           ))}
         </Box>
