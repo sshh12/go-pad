@@ -1,10 +1,11 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'theme-ui';
 import { Box, Text, Flex, Link } from 'rebass';
 import Links from './components/Links';
 import Pad from './components/Pad';
 import Settings from './components/Settings';
+import api from './api';
 
 const TABS = {
   links: Links,
@@ -21,6 +22,8 @@ function getTab() {
 }
 
 function App() {
+  let [loading, setLoading] = useState(false);
+  let [pullData, setPullData] = useState(null);
   let [tab, _] = useState(getTab());
   let [theme, setTheme] = useState(
     JSON.parse(localStorage.getItem('gopad:theme'))
@@ -32,6 +35,14 @@ function App() {
   let [notes, setNotes] = useState(
     JSON.parse(localStorage.getItem('gopad:notes'))
   );
+  const db = { links, notes, theme };
+  useEffect(() => {
+    api.get(`/pull/${user}`).then((pd) => {
+      if (JSON.stringify(db) != JSON.stringify(pd)) {
+        setPullData(pd);
+      }
+    });
+  }, [user]);
   let setLSTheme = (newTheme) => {
     localStorage.setItem('gopad:theme', JSON.stringify(newTheme));
     setTheme(newTheme);
@@ -50,6 +61,18 @@ function App() {
     localStorage.setItem('gopad:notes', JSON.stringify(notes));
     setNotes(notes);
   };
+  let push = async () => {
+    setLoading(true);
+    await api.put(`/push/${user}`, db);
+    setLoading(false);
+  };
+  let pull = async () => {
+    let { links, notes, theme } = pullData;
+    setLSLinks(links);
+    setLSNotes(notes);
+    setLSTheme(theme);
+    setPullData(null);
+  };
   let TabView = TABS[tab];
   return (
     <ThemeProvider theme={theme}>
@@ -59,6 +82,42 @@ function App() {
             Go Pad
           </Text>
           <Box mx="auto" />
+          {loading ? (
+            <Text>*loading*</Text>
+          ) : (
+            <>
+              {pullData && (
+                <Link
+                  onClick={pull}
+                  href={'#'}
+                  variant="nav"
+                  sx={{
+                    display: 'inline-block',
+                    fontWeight: 'bold',
+                    px: 2,
+                    py: 1,
+                    color: 'inherit'
+                  }}
+                >
+                  pull
+                </Link>
+              )}
+              <Link
+                onClick={push}
+                href={'#'}
+                variant="nav"
+                sx={{
+                  display: 'inline-block',
+                  fontWeight: 'bold',
+                  px: 2,
+                  py: 1,
+                  color: 'inherit'
+                }}
+              >
+                {pullData ? 'push (overwrite)' : 'push'}
+              </Link>
+            </>
+          )}
           {Object.keys(TABS).map((tb) => (
             <Link
               key={tb}

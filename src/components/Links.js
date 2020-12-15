@@ -64,8 +64,8 @@ export default function Links({ links, setLinks }) {
         {forwardTos.map((ft, idx) => {
           let key = `url${idx}`;
           return (
-            <Flex>
-              <Box key={key} width={idx != forwardTos.length - 1 ? 1 : 7 / 8}>
+            <Flex key={key}>
+              <Box width={idx != forwardTos.length - 1 ? 1 : 7 / 8}>
                 {idx == 0 && <Label htmlFor={key}>open</Label>}
                 {idx != 0 && !ft && <Label htmlFor={key}>(and)</Label>}
                 {idx != 0 && ft && <Label htmlFor={key}>and</Label>}
