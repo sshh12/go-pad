@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Card, Image, Heading, Text, Button, Flex, Link } from 'rebass';
+import { Box, Text, Button } from 'rebass';
 import { Label, Input } from '@rebass/forms';
 
 export default function Links() {
@@ -43,7 +43,7 @@ export default function Links() {
         }}
       >
         <Box>
-          <Label htmlFor="alias">go/</Label>
+          <Label htmlFor="alias">make go/</Label>
           <Input
             value={linkText}
             onChange={(e) => setLinkTest(e.target.value)}
@@ -53,21 +53,24 @@ export default function Links() {
             placeholder="alias"
           />
         </Box>
-        {forwardTos.map((ft, idx) => (
-          <Box>
-            {idx == 0 && <Label htmlFor="url">should open</Label>}
-            {idx != 0 && !ft && <Label htmlFor="url">(and)</Label>}
-            {idx != 0 && ft && <Label htmlFor="url">and</Label>}
-            <Input
-              value={ft}
-              onChange={(e) => editForward(e.target.value, idx)}
-              id="url"
-              name="url"
-              type="url"
-              placeholder="https://example.com"
-            />
-          </Box>
-        ))}
+        {forwardTos.map((ft, idx) => {
+          let key = `url${idx}`;
+          return (
+            <Box key={key}>
+              {idx == 0 && <Label htmlFor={key}>open</Label>}
+              {idx != 0 && !ft && <Label htmlFor={key}>(and)</Label>}
+              {idx != 0 && ft && <Label htmlFor={key}>and</Label>}
+              <Input
+                value={ft}
+                onChange={(e) => editForward(e.target.value, idx)}
+                id={key}
+                name={key}
+                type={key}
+                placeholder="https://example.com"
+              />
+            </Box>
+          );
+        })}
         <Button mt={10} onClick={addCurrent}>
           Add
         </Button>

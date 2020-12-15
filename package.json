@@ -10,6 +10,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
+    "react-syntax-highlighter": "^15.4.3",
     "rebass": "^4.0.7",
     "theme-ui": "^0.3.4",
     "web-vitals": "^0.2.4"
