@@ -37,11 +37,14 @@ function App() {
   );
   const db = { links, notes, theme };
   useEffect(() => {
-    api.get(`/pull/${user}`).then((pd) => {
-      if (JSON.stringify(db) != JSON.stringify(pd)) {
-        setPullData(pd);
-      }
-    });
+    api
+      .get(`/pull/${user}`)
+      .then((pd) => {
+        if (JSON.stringify(db) != JSON.stringify(pd)) {
+          setPullData(pd);
+        }
+      })
+      .catch(console.warn);
   }, [user]);
   let setLSTheme = (newTheme) => {
     localStorage.setItem('gopad:theme', JSON.stringify(newTheme));
