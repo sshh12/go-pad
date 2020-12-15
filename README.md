@@ -18,3 +18,7 @@ $ git clone https://github.com/sshh12/go-pad
 $ yarn install
 $ yarn start
 ```
+
+### DNS
+
+If you want to use this as `go/` then you'll need to make the domain `go` point to the IP of your server. See this [Linux, Windows, and MacOS tutorial](https://linuxize.com/post/how-to-edit-your-hosts-file/#modify-hosts-file-in-windows).
