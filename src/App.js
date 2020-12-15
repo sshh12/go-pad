@@ -68,6 +68,7 @@ function App() {
     setLoading(true);
     await api.put(`/push/${user}`, db);
     setLoading(false);
+    setPullData(null);
   };
   let pull = async () => {
     let { links, notes, theme } = pullData;
